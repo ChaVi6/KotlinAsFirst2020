@@ -75,7 +75,7 @@ fun ageDescription(age: Int): String = when (age) {
     12 -> "$age лет"
     111 -> "$age лет"
     199 -> "$age лет"
-    else -> "$age лет"
+    else -> "$age года"
 }
 
 /**

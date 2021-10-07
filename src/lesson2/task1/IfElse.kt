@@ -108,12 +108,19 @@ fun whichRookThreatens(
     kingX: Int, kingY: Int,
     rookX1: Int, rookY1: Int,
     rookX2: Int, rookY2: Int
-): Int = when {
-    (kingX == rookX1 || kingY == rookY1) && (kingX == rookX2 || kingY == rookY2) -> 3
-    (kingX == rookX1 || kingY == rookY1) -> 1
-    (kingX == rookX2 || kingY == rookY2) -> 2
-    (kingX != rookX1 || kingY != rookY1) && (kingX != rookX2 || kingY != rookY2) -> 0
-    else -> -1
+): Int {
+    var w1 = false
+    var w2 = false
+    if (kingX == rookX1 || kingY == rookY1)
+        w1 = true
+    if (kingX == rookX2 || kingY == rookY2)
+        w2 = true
+    return when {
+        w1 && w2 -> 3
+        !w1 && !w2 -> 0
+        w1 -> 1
+        else -> 2
+    }
 }
 
 
@@ -131,11 +138,19 @@ fun rookOrBishopThreatens(
     kingX: Int, kingY: Int,
     rookX: Int, rookY: Int,
     bishopX: Int, bishopY: Int
-): Int = when {
-    (kingX == rookX || kingY == rookY) && ((kingX - kingY == bishopX - bishopY) || (kingX + kingY == bishopX + bishopY)) -> 3
-    (kingX == rookX || kingY == rookY) -> 1
-    ((kingX - kingY == bishopX - bishopY) || (kingX + kingY == bishopX + bishopY)) -> 2
-    else -> 0
+): Int {
+    var w1 = false
+    var w2 = false
+    if (kingX == rookX || kingY == rookY)
+        w1 = true
+    if ((kingX - kingY == bishopX - bishopY) || (kingX + kingY == bishopX + bishopY))
+        w2 = true
+    return when {
+        w1 && w2 -> 3
+        !w1 && !w2 -> 0
+        w1 -> 1
+        else -> 2
+    }
 }
 
 /**

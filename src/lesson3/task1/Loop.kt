@@ -208,11 +208,7 @@ fun isPalindrome(n: Int): Boolean {
         s = s * 10 + i
         number /= 10
     }
-    return when {
-        (n == s) -> true
-        else -> false
-    }
-
+    return (n == s)
 }
 
 /**

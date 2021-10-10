@@ -127,7 +127,10 @@ fun abs(v: List<Double>): Double = TODO()
  *
  * Рассчитать среднее арифметическое элементов списка list. Вернуть 0.0, если список пуст
  */
-fun mean(list: List<Double>): Double = TODO()
+fun mean(list: List<Double>): Double = when {
+    list.isNotEmpty() -> list.sum() / list.size
+    else -> 0.0
+}
 
 /**
  * Средняя (3 балла)
@@ -168,7 +171,15 @@ fun polynom(p: List<Int>, x: Int): Int = TODO()
  *
  * Обратите внимание, что данная функция должна изменять содержание списка list, а не его копии.
  */
-fun accumulate(list: MutableList<Int>): MutableList<Int> = TODO()
+fun accumulate(list: MutableList<Int>): MutableList<Int> = when {
+    list.isEmpty() -> list
+    else -> {
+        for (i in 1 until list.size) {
+            list[i] += list[i - 1]
+        }
+        list
+    }
+}
 
 /**
  * Средняя (3 балла)
@@ -195,7 +206,16 @@ fun factorizeToString(n: Int): String = TODO()
  * Результат перевода вернуть в виде списка цифр в base-ичной системе от старшей к младшей,
  * например: n = 100, base = 4 -> (1, 2, 1, 0) или n = 250, base = 14 -> (1, 3, 12)
  */
-fun convert(n: Int, base: Int): List<Int> = TODO()
+fun convert(n: Int, base: Int): List<Int> {
+    var x = n
+    val result = mutableListOf<Int>()
+    if (x == 0) return listOf(0)
+    while (x > 0) {
+        result.add(x % base)
+        x /= base
+    }
+    return result.reversed()
+}
 
 /**
  * Сложная (4 балла)

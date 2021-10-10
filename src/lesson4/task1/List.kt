@@ -131,11 +131,7 @@ fun mean(list: List<Double>): Double {
     var ar: Double = 0.0
     if (list.isEmpty()) ar = 0.0
     else {
-        for (i in list.indices) {
-            val element = list[i]
-            ar = (ar + element)
-        }
-        return ar / list.size
+        ar = list.sum() / list.size
     }
     return ar
 }
@@ -149,7 +145,14 @@ fun mean(list: List<Double>): Double {
  *
  * Обратите внимание, что данная функция должна изменять содержание списка list, а не его копии.
  */
-fun center(list: MutableList<Double>): MutableList<Double> = TODO()
+fun center(list: MutableList<Double>): MutableList<Double> {
+    var mean = 0.0
+    if (list.isEmpty()) mean = 0.0 else mean = (list.sum() / list.size)
+    for (i in 0 until list.size) {
+        list[i] -= mean
+    }
+    return list
+}
 
 /**
  * Средняя (3 балла)

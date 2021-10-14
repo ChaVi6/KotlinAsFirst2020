@@ -130,11 +130,17 @@ fun rookOrBishopThreatens(
  * прямоугольным (вернуть 1) или тупоугольным (вернуть 2).
  * Если такой треугольник не существует, вернуть -1.
  */
-fun triangleKind(a: Double, b: Double, c: Double): Int = when {
-    ((sqr(a) + sqr(b) == sqr(c)) || (sqr(a) + sqr(c) == sqr(b)) || (sqr(c) + sqr(b) == sqr(a))) -> 1
-    ((sqr(a) + sqr(b) > sqr(c)) || (sqr(a) + sqr(c) > sqr(b)) || (sqr(b) + sqr(c) > sqr(a))) -> 0
-    ((sqr(a) + sqr(b) < sqr(c)) || (sqr(a) + sqr(c) < sqr(b)) || (sqr(b) + sqr(c) < sqr(a))) -> 2
-    else -> -1
+fun triangleKind(a: Double, b: Double, c: Double): Int {
+    val min = minOf(a, b, c)
+    val max = maxOf(a, b, c)
+    val mid = (a + b + c) - min - max
+    return if (max + min > mid && min + mid > max && max + mid > min) {
+        if (sqr(max) == sqr(mid) + sqr(min)) {
+            1
+        } else if (sqr(max) > sqr(mid) + sqr(min)) {
+            2
+        } else 0
+    } else -1
 }
 
 

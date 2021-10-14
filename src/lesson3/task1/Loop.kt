@@ -110,7 +110,7 @@ fun fib(n: Int): Int {
  */
 fun minDivisor(n: Int): Int {
     var x = n
-    for (i in 2..n) {
+    for (i in 2..Math.sqrt(n.toDouble()).toInt()) {
         if ((n % i == 0) && (i < x)) x = i
     }
     return x
@@ -124,8 +124,11 @@ fun minDivisor(n: Int): Int {
  */
 fun maxDivisor(n: Int): Int {
     var x = 1
-    for (i in 2 until n) {
-        if (n % i == 0) x = i
+    for (i in 2..Math.sqrt(n.toDouble()).toInt()) {
+        if (n % i == 0) {
+            x = n / i
+            break
+        }
     }
     return x
 }
@@ -155,12 +158,10 @@ fun collatzSteps(x: Int): Int = TODO()
  * минимальное число k, которое делится и на m и на n без остатка
  */
 fun lcm(m: Int, n: Int): Int {
-    var k = 1
-    while (k > 0) {
-        if ((k % n == 0) && (k % m == 0)) break else k += 1
-    }
-    return k
+    fun gcd(a: Int, b: Int): Int = if (b == 0) a else gcd(b, a % b)
+    return (m / gcd(m, n) * n)
 }
+
 
 /**
  * Средняя (3 балла)

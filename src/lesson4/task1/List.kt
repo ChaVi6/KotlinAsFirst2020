@@ -225,7 +225,17 @@ fun convert(n: Int, base: Int): List<Int> {
  * Использовать функции стандартной библиотеки, напрямую и полностью решающие данную задачу
  * (например, n.toString(base) и подобные), запрещается.
  */
-fun convertToString(n: Int, base: Int): String = TODO()
+fun convertToString(n: Int, base: Int): String {
+    val alph = "abcdefghijklmnopqrstuvwxyz"
+    var str = ""
+    var x = n
+    while (x > 0) {
+        if (x % base < 10) str += (x % base) else
+            str += alph[(x % base) - 10]
+        x /= base
+    }
+    return str.reversed()
+}
 
 /**
  * Средняя (3 балла)
@@ -258,7 +268,21 @@ fun decimalFromString(str: String, base: Int): Int = TODO()
  * 90 = XC, 100 = C, 400 = CD, 500 = D, 900 = CM, 1000 = M.
  * Например: 23 = XXIII, 44 = XLIV, 100 = C
  */
-fun roman(n: Int): String = TODO()
+fun roman(n: Int): String {
+    val num = listOf(1000, 900, 500, 400, 100, 90, 50, 40, 10, 9, 5, 4, 1)
+    val let = listOf("M", "CM", "D", "CD", "C", "XC", "L", "XL", "X", "IX", "V", "IV", "I")
+    var str = ""
+    var x = n
+    var i = 0
+    while (x > 0 && i < 13) {
+        while (x >= num[i]) {
+            str += let[i]
+            x -= num[i]
+        }
+        i += 1
+    }
+    return str
+}
 
 /**
  * Очень сложная (7 баллов)

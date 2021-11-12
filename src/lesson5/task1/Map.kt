@@ -193,7 +193,7 @@ fun mergePhoneBooks(mapA: Map<String, String>, mapB: Map<String, String>): Map<S
     val result = mapA.toMutableMap()
     for ((k, v) in mapB) {
         if (k in result) {
-            if (v !in result.getValue(k).split(", "))
+            if (!result[k]?.contains(v)!!)
                 result[k] = result[k] + ", $v"
         } else {
             result[k] = v

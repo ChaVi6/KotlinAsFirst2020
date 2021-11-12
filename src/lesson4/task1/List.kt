@@ -275,7 +275,7 @@ fun roman(n: Int): String {
     var str = ""
     var x = n
     var i = 0
-    while (x > 0 && i < 13) {
+    while (x > 0) {
         while (x >= num[i]) {
             str += let[i]
             x -= num[i]

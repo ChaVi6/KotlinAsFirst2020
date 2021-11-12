@@ -229,6 +229,7 @@ fun convertToString(n: Int, base: Int): String {
     val alph = "abcdefghijklmnopqrstuvwxyz"
     var str = ""
     var x = n
+    if (x == 0) return "0"
     while (x > 0) {
         if (x % base < 10) str += (x % base) else
             str += alph[(x % base) - 10]

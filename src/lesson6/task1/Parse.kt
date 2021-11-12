@@ -2,6 +2,8 @@
 
 package lesson6.task1
 
+import lesson2.task2.daysInMonth
+
 // Урок 6: разбор строк, исключения
 // Максимальное количество баллов = 13
 // Рекомендуемое количество баллов = 11
@@ -74,7 +76,37 @@ fun main() {
  * Обратите внимание: некорректная с точки зрения календаря дата (например, 30.02.2009) считается неверными
  * входными данными.
  */
-fun dateStrToDigit(str: String): String = TODO()
+fun dateStrToDigit(str: String): String {
+    val parts = str.split(" ")
+    if (parts.size != 3) return ""
+    else
+        try {
+            val months = listOf(
+                "января",
+                "февраля",
+                "марта",
+                "апреля",
+                "мая",
+                "июня",
+                "июля",
+                "августа",
+                "сентября",
+                "октября",
+                "ноября",
+                "декабря"
+            )
+            val day = parts[0].toInt()
+            val month = months.indexOf(parts[1]) + 1
+            val years = parts[2].toInt()
+            return if ((parts[1] in months) && (daysInMonth(month, years) >= day)) {
+                String.format("%02d.%02d.$years", day, month)
+            } else ""
+
+        } catch (e: NumberFormatException) {
+            return ""
+        }
+}
+
 
 /**
  * Средняя (4 балла)
@@ -86,7 +118,38 @@ fun dateStrToDigit(str: String): String = TODO()
  * Обратите внимание: некорректная с точки зрения календаря дата (например, 30 февраля 2009) считается неверными
  * входными данными.
  */
-fun dateDigitToStr(digital: String): String = TODO()
+fun dateDigitToStr(digital: String): String {
+    val parts = digital.split(".")
+
+    if (parts.size != 3) return ""
+    else
+        try {
+            if ((parts[1].toInt() !in 1..12)) return ""
+            val months = listOf(
+                "января",
+                "февраля",
+                "марта",
+                "апреля",
+                "мая",
+                "июня",
+                "июля",
+                "августа",
+                "сентября",
+                "октября",
+                "ноября",
+                "декабря"
+            )
+            val day = parts[0].toInt()
+            val month = months[parts[1].toInt() - 1]
+            val years = parts[2].toInt()
+            return if (daysInMonth(parts[1].toInt(), years) >= day)
+                String.format("$day $month $years")
+            else
+                ""
+        } catch (e: NumberFormatException) {
+            return ""
+        }
+}
 
 /**
  * Средняя (4 балла)

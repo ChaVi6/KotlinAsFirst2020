@@ -157,9 +157,16 @@ fun subtractOf(a: MutableMap<String, String>, b: Map<String, String>) {
  */
 fun whoAreInBoth(a: List<String>, b: List<String>): List<String> {
     val result = mutableListOf<String>()
-    for (name in a) {
-        if (name in b && name !in result) {
-            result.add(name)
+    val persons = mutableMapOf<String, Int>()
+    for (k in a) {
+        persons[k] = 1
+    }
+    for (k in b) {
+        persons[k] = persons.getOrDefault(k,0) + 1
+    }
+    for ((k, v) in persons) {
+        if (v == 2) {
+            result.add(k)
         }
     }
     return result
@@ -265,18 +272,13 @@ fun canBuildFrom(chars: List<Char>, word: String): Boolean = TODO()
 fun extractRepeats(list: List<String>): Map<String, Int> {
     val result = mutableMapOf<String, Int>()
     for (x in list) {
-        if (x !in result) {
-            var k = 0
-            for (y in list) {
-                if (x == y)
-                    k++
-            }
-            if (k > 1)
-                result[x] = k
-        }
+        if (x in result)
+            continue
+        var k = list.count { it -> it == x }
+        if (k > 1)
+            result[x] = k
     }
     return result
-
 }
 
 /**

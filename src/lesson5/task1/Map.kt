@@ -100,7 +100,7 @@ fun buildGrades(grades: Map<String, Int>): Map<Int, List<String>> {
     val journal = mutableMapOf<Int, MutableList<String>>()
     for ((key, value) in grades) {
         if (journal[value] != null) journal[value]?.add(key) else
-            journal[value] = mutableListOf(key)
+            journal[value] = mutableListOf()
     }
     return journal
 }
@@ -115,7 +115,12 @@ fun buildGrades(grades: Map<String, Int>): Map<Int, List<String>> {
  *   containsIn(mapOf("a" to "z"), mapOf("a" to "z", "b" to "sweet")) -> true
  *   containsIn(mapOf("a" to "z"), mapOf("a" to "zee", "b" to "sweet")) -> false
  */
-fun containsIn(a: Map<String, String>, b: Map<String, String>): Boolean = TODO()
+fun containsIn(a: Map<String, String>, b: Map<String, String>): Boolean {
+    for ((key, value) in a) {
+        if (value != b[key]) return false
+    }
+    return true
+}
 /**
  * Простая (2 балла)
  *
@@ -162,6 +167,8 @@ fun whoAreInBoth(a: List<String>, b: List<String>): List<String> = TODO()
  */
 fun mergePhoneBooks(mapA: Map<String, String>, mapB: Map<String, String>): Map<String, String> = TODO()
 
+
+
 /**
  * Средняя (4 балла)
  *
@@ -190,7 +197,6 @@ fun averageStockPrice(stockPrices: List<Pair<String, Double>>): Map<String, Doub
  *   ) -> "Мария"
  */
 fun findCheapestStuff(stuff: Map<String, Pair<String, Double>>, kind: String): String? = TODO()
-
 /**
  * Средняя (3 балла)
  *

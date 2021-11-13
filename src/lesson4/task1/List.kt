@@ -3,6 +3,7 @@
 package lesson4.task1
 
 import lesson1.task1.discriminant
+import kotlin.math.pow
 import kotlin.math.sqrt
 
 // Урок 4: списки
@@ -245,7 +246,13 @@ fun convertToString(n: Int, base: Int): String {
  * из системы счисления с основанием base в десятичную.
  * Например: digits = (1, 3, 12), base = 14 -> 250
  */
-fun decimal(digits: List<Int>, base: Int): Int = TODO()
+fun decimal(digits: List<Int>, base: Int): Int {
+    val list = digits.reversed()
+    var x = 0
+    for (i in list.indices)
+        x += list[i] * (base.toDouble().pow(i.toDouble())).toInt()
+    return x
+}
 
 /**
  * Сложная (4 балла)

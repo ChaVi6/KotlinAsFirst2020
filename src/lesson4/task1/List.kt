@@ -228,15 +228,16 @@ fun convert(n: Int, base: Int): List<Int> {
  */
 fun convertToString(n: Int, base: Int): String {
     val alph = "abcdefghijklmnopqrstuvwxyz"
-    var str = ""
+    val str = StringBuilder()
     var x = n
     if (x == 0) return "0"
     while (x > 0) {
-        if (x % base < 10) str += (x % base) else
-            str += alph[(x % base) - 10]
+        if (x % base < 10) str.append((x % base)) else
+            str.append(alph[(x % base) - 10])
         x /= base
     }
-    return str.reversed()
+    val s = str.toString()
+    return s.reversed()
 }
 
 /**
@@ -279,17 +280,17 @@ fun decimalFromString(str: String, base: Int): Int = TODO()
 fun roman(n: Int): String {
     val num = listOf(1000, 900, 500, 400, 100, 90, 50, 40, 10, 9, 5, 4, 1)
     val let = listOf("M", "CM", "D", "CD", "C", "XC", "L", "XL", "X", "IX", "V", "IV", "I")
-    var str = ""
+    val str = StringBuilder()
     var x = n
     var i = 0
     while (x > 0) {
         while (x >= num[i]) {
-            str += let[i]
+            str.append(let[i])
             x -= num[i]
         }
         i += 1
     }
-    return str
+    return str.toString()
 }
 
 /**

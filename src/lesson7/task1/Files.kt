@@ -63,8 +63,18 @@ fun alignFile(inputName: String, lineLength: Int, outputName: String) {
  * Подчёркивание в середине и/или в конце строк значения не имеет.
  */
 fun deleteMarked(inputName: String, outputName: String) {
-    TODO()
+    val file = File(inputName).readLines()
+    val writer = File(outputName).bufferedWriter()
+
+    for (line in file) {
+        if (line.isEmpty() || line[0] != '_') {
+            writer.write(line)
+            writer.newLine()
+        }
+    }
+    writer.close()
 }
+
 
 /**
  * Средняя (14 баллов)

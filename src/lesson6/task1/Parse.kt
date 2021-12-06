@@ -64,6 +64,20 @@ fun main() {
     }
 }
 
+val months = listOf(
+    "января",
+    "февраля",
+    "марта",
+    "апреля",
+    "мая",
+    "июня",
+    "июля",
+    "августа",
+    "сентября",
+    "октября",
+    "ноября",
+    "декабря"
+)
 
 /**
  * Средняя (4 балла)
@@ -81,20 +95,6 @@ fun dateStrToDigit(str: String): String {
     if (parts.size != 3) return ""
     else
         try {
-            val months = listOf(
-                "января",
-                "февраля",
-                "марта",
-                "апреля",
-                "мая",
-                "июня",
-                "июля",
-                "августа",
-                "сентября",
-                "октября",
-                "ноября",
-                "декабря"
-            )
             val day = parts[0].toInt()
             val month = months.indexOf(parts[1]) + 1
             val years = parts[2].toInt()
@@ -106,7 +106,6 @@ fun dateStrToDigit(str: String): String {
             return ""
         }
 }
-
 
 /**
  * Средняя (4 балла)
@@ -125,20 +124,6 @@ fun dateDigitToStr(digital: String): String {
     else
         try {
             if ((parts[1].toInt() !in 1..12)) return ""
-            val months = listOf(
-                "января",
-                "февраля",
-                "марта",
-                "апреля",
-                "мая",
-                "июня",
-                "июля",
-                "августа",
-                "сентября",
-                "октября",
-                "ноября",
-                "декабря"
-            )
             val day = parts[0].toInt()
             val month = months[parts[1].toInt() - 1]
             val years = parts[2].toInt()
@@ -225,7 +210,24 @@ fun firstDuplicateIndex(str: String): Int = TODO()
  * или пустую строку при нарушении формата строки.
  * Все цены должны быть больше нуля либо равны нулю.
  */
-fun mostExpensive(description: String): String = TODO()
+fun mostExpensive(description: String): String {
+    val foods = description.split("; ")
+    var expensiveFood = ""
+    var maxCost = 0.0
+    for (i in foods) {
+        val k = i.split(" ")
+        if (k.size != 2) return ""
+        if (k.isNotEmpty()) {
+            val cost = k[1].toDouble()
+            val food = k[0]
+            if (((cost > 0.0) or (cost == 0.0)) and (cost >= maxCost)) {
+                expensiveFood = food
+                maxCost = cost
+            }
+        }
+    }
+    return expensiveFood
+}
 
 /**
  * Сложная (6 баллов)

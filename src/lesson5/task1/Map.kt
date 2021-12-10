@@ -99,11 +99,13 @@ fun buildWordSet(text: List<String>): MutableSet<String> {
 fun buildGrades(grades: Map<String, Int>): Map<Int, List<String>> {
     val journal = mutableMapOf<Int, MutableList<String>>()
     for ((key, value) in grades) {
-        if (journal[value] == null) journal[value] = mutableListOf(key) else
-            journal[value]?.add(key)
+        journal[value] = ((journal[value] ?: mutableListOf()) + key) as MutableList<String>
     }
     return journal
 }
+
+//
+//
 
 /**
  * Простая (2 балла)
@@ -121,6 +123,7 @@ fun containsIn(a: Map<String, String>, b: Map<String, String>): Boolean {
     }
     return true
 }
+
 /**
  * Простая (2 балла)
  *
@@ -180,6 +183,7 @@ fun mergePhoneBooks(mapA: Map<String, String>, mapB: Map<String, String>) {
  *     -> mapOf("MSFT" to 150.0, "NFLX" to 40.0)
  */
 fun averageStockPrice(stockPrices: List<Pair<String, Double>>): Nothing = TODO()
+
 /**
  * Средняя (4 балла)
  *
@@ -196,6 +200,7 @@ fun averageStockPrice(stockPrices: List<Pair<String, Double>>): Nothing = TODO()
  *   ) -> "Мария"
  */
 fun findCheapestStuff(stuff: Map<String, Pair<String, Double>>, kind: String): String? = TODO()
+
 /**
  * Средняя (3 балла)
  *
@@ -221,11 +226,16 @@ fun canBuildFrom(chars: List<Char>, word: String): Boolean = TODO()
  */
 fun extractRepeats(list: List<String>): Map<String, Int> {
     val s = mutableMapOf<String, Int>()
-    for (i in list.indices)
-        if (s.containsKey(list[i])) s[list[i]] = s.getValue(list[i]) + 1
-        else s[list[i]] = 1
+    for (element in list)
+        if (s.containsKey(element)) s[element] = s.getValue(element) + 1
+        else s[element] = 1
     return s.filterValues { it > 1 }
 }
+
+//for (i in list.indices)
+//        if (s.containsKey(list[i])) s[list[i]] = s.getValue(list[i]) + 1
+//        else s[list[i]] = 1
+//    return s.filterValues { it > 1 }
 
 /**
  * Средняя (3 балла)
@@ -295,16 +305,15 @@ fun propagateHandshakes(friends: Map<String, Set<String>>): Map<String, Set<Stri
  *   findSumOfTwo(listOf(1, 2, 3), 6) -> Pair(-1, -1)
  */
 fun findSumOfTwo(list: List<Int>, number: Int): Pair<Int, Int> {
+    val result = mutableMapOf<Int, Int>()
     for (i in list.indices) {
-        if ((number - list[i] in list) && (i != list.indexOf(number - list[i]))) {
-            return Pair(minOf(i, list.indexOf(number - list[i])), maxOf(i, list.indexOf(number - list[i])))
-        }
+        if (list[i] in result) return Pair(result[list[i]]!!, i)
+        result[number - list[i]] = i
     }
     return Pair(-1, -1)
 }
-/**
- * Очень сложная (8 баллов)
- *
+
+ /**
  * Входными данными является ассоциативный массив
  * "название сокровища"-"пара (вес сокровища, цена сокровища)"
  * и вместимость вашего рюкзака.

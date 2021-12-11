@@ -119,6 +119,7 @@ fun dateStrToDigit(str: String): String {
  */
 fun dateDigitToStr(digital: String): String = TODO()
 
+
 /**
  * Средняя (4 балла)
  *

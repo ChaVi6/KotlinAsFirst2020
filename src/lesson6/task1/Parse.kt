@@ -2,6 +2,9 @@
 
 package lesson6.task1
 
+import lesson2.task2.daysInMonth
+import java.util.*
+
 // Урок 6: разбор строк, исключения
 // Максимальное количество баллов = 13
 // Рекомендуемое количество баллов = 11
@@ -74,7 +77,35 @@ fun main() {
  * Обратите внимание: некорректная с точки зрения календаря дата (например, 30.02.2009) считается неверными
  * входными данными.
  */
-fun dateStrToDigit(str: String): String = TODO()
+fun dateStrToDigit(str: String): String {
+    val months = listOf(
+        "января",
+        "февраля",
+        "марта",
+        "апреля",
+        "мая",
+        "июня",
+        "июля",
+        "августа",
+        "сентября",
+        "октября",
+        "ноября",
+        "декабря",
+    )
+    val parts = str.split(" ")
+    return if (parts.size != 3) ""
+    else
+        try {
+            val month = months.indexOf(parts[1]) + 1
+            val year = parts[2].toInt()
+            if ((parts[0].toInt() <= daysInMonth(month, year)) && (parts[1] in months)) {
+                String.format("%02d.%02d.%01d", parts[0].toInt(), month, year)
+            } else ""
+        } catch (e: NumberFormatException) {
+            ""
+        }
+}
+
 
 /**
  * Средняя (4 балла)
@@ -149,7 +180,17 @@ fun plusMinus(expression: String): Int = TODO()
  * Вернуть индекс начала первого повторяющегося слова, или -1, если повторов нет.
  * Пример: "Он пошёл в в школу" => результат 9 (индекс первого 'в')
  */
-fun firstDuplicateIndex(str: String): Int = TODO()
+fun firstDuplicateIndex(str: String): Int {
+    val parts = str.split(" ")
+    if (parts.size == 1) return -1
+    var x = 0
+    for (i in 0 until parts.size - 1) {
+        if (parts[i].equals(parts[i + 1], ignoreCase = true))
+            return x
+        x += parts[i].length + 1
+    }
+    return -1
+}
 
 /**
  * Сложная (6 баллов)

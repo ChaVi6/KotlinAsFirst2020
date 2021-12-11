@@ -99,7 +99,7 @@ fun buildWordSet(text: List<String>): MutableSet<String> {
 fun buildGrades(grades: Map<String, Int>): Map<Int, List<String>> {
     val journal = mutableMapOf<Int, MutableList<String>>()
     for ((key, value) in grades) {
-        journal[value] = ((journal[value] ?: mutableListOf()) + key) as MutableList<String>
+        journal[value] = (((journal[value] ?: mutableListOf()) + key).toMutableList())
     }
     return journal
 }
@@ -232,11 +232,6 @@ fun extractRepeats(list: List<String>): Map<String, Int> {
     return s.filterValues { it > 1 }
 }
 
-//for (i in list.indices)
-//        if (s.containsKey(list[i])) s[list[i]] = s.getValue(list[i]) + 1
-//        else s[list[i]] = 1
-//    return s.filterValues { it > 1 }
-
 /**
  * Средняя (3 балла)
  *
@@ -307,8 +302,8 @@ fun propagateHandshakes(friends: Map<String, Set<String>>): Map<String, Set<Stri
 fun findSumOfTwo(list: List<Int>, number: Int): Pair<Int, Int> {
     val result = mutableMapOf<Int, Int>()
     for (i in list.indices) {
-        if (list[i] in result) return Pair(result[list[i]]!!, i)
-        result[number - list[i]] = i
+        if (list[i] !in result) result[number - list[i]] = i
+        else return Pair(result[list[i]]!!, i)
     }
     return Pair(-1, -1)
 }

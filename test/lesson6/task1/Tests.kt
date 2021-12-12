@@ -151,3 +151,19 @@ class Tests {
         assertThrows(IllegalStateException::class.java) { computeDeviceCells(20, ">>>>>>>>>>>>>", 12) }
     }
 }
+
+//@Test
+//fun myFunTest() {
+//    assertEquals(
+//        listOf("Миронов Кирилл"),
+//        lesson6.task1.myFun(
+//            listOf(
+//                "Иванов Петр : улица Ленина, 41, кв. 2"
+//                 ""
+//
+//            )
+//        )
+//
+//    )
+//
+//}

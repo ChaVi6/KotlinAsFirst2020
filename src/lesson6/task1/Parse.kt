@@ -3,6 +3,7 @@
 package lesson6.task1
 
 import lesson2.task2.daysInMonth
+import java.lang.IllegalArgumentException
 
 // Урок 6: разбор строк, исключения
 // Максимальное количество баллов = 13
@@ -97,8 +98,9 @@ fun dateStrToDigit(str: String): String {
         try {
             val day = parts[0].toInt()
             val month = months.indexOf(parts[1]) + 1
+            if (month !in 1..12) return ""
             val years = parts[2].toInt()
-            return if ((parts[1] in months) && (daysInMonth(month, years) >= day)) {
+            return if (daysInMonth(month, years) >= day) {
                 String.format("%02d.%02d.$years", day, month)
             } else ""
 
@@ -123,11 +125,12 @@ fun dateDigitToStr(digital: String): String {
     if (parts.size != 3) return ""
     else
         try {
-            if ((parts[1].toInt() !in 1..12)) return ""
             val day = parts[0].toInt()
+            val monthNumber = parts[1].toInt()
+            if (monthNumber !in 1..12) return ""
             val month = months[parts[1].toInt() - 1]
             val years = parts[2].toInt()
-            return if (daysInMonth(parts[1].toInt(), years) >= day)
+            return if (daysInMonth(monthNumber, years) >= day)
                 String.format("$day $month $years")
             else
                 ""
@@ -240,7 +243,36 @@ fun mostExpensive(description: String): String {
  *
  * Вернуть -1, если roman не является корректным римским числом
  */
-fun fromRoman(roman: String): Int = TODO()
+fun fromRoman(roman: String): Int {
+    val numbers = mapOf(
+        "CM" to 900,
+        "M" to 1000,
+        "CD" to 400,
+        "D" to 500,
+        "XC" to 90,
+        "C" to 100,
+        "XL" to 40,
+        "L" to 50,
+        "IX" to 9,
+        "X" to 10,
+        "IV" to 4,
+        "V" to 5,
+        "I" to 1
+    )
+    var romanString = roman
+    var number = 0
+    for ((romanNumber, decadeNumber) in numbers) {
+        while (romanString.indexOf(romanNumber) > -1) {
+            romanString = romanString.replaceFirst(romanNumber, "")
+            number += decadeNumber
+        }
+    }
+    if (romanString != "" || number == 0) {
+        return -1
+    }
+    return number
+
+}
 
 /**
  * Очень сложная (7 баллов)

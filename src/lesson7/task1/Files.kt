@@ -218,6 +218,17 @@ fun transliterate(inputName: String, dictionary: Map<Char, String>, outputName: 
     TODO()
 }
 
+
+fun hasDifferentLetters(word: String): Boolean {
+    val text = word.lowercase()
+    for (letter in text) {
+        val count = text.count { char -> char == letter }
+        if (count > 1) {
+            return false
+        }
+    }
+    return true
+}
 /**
  * Средняя (12 баллов)
  *
@@ -243,8 +254,27 @@ fun transliterate(inputName: String, dictionary: Map<Char, String>, outputName: 
  * Обратите внимание: данная функция не имеет возвращаемого значения
  */
 fun chooseLongestChaoticWord(inputName: String, outputName: String) {
-    TODO()
+    val file = File(inputName).readLines()
+    var max = 0
+    var words = mutableListOf<String>()
+
+    for (word in file) {
+        if (word.length > max) {
+            if (hasDifferentLetters(word)) {
+                words = mutableListOf(word)
+                max = word.length
+            }
+        } else if (word.length == max) {
+            if (hasDifferentLetters(word)) {
+                words.add(word)
+            }
+        }
+    }
+
+    File(outputName).writeText(words.joinToString(separator = ", "))
+
 }
+
 
 /**
  * Сложная (22 балла)

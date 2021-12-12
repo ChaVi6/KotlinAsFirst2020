@@ -119,7 +119,6 @@ fun dateStrToDigit(str: String): String {
  */
 fun dateDigitToStr(digital: String): String = TODO()
 
-
 /**
  * Средняя (4 балла)
  *
@@ -170,7 +169,22 @@ fun bestHighJump(jumps: String): Int = TODO()
  * Вернуть значение выражения (6 для примера).
  * Про нарушении формата входной строки бросить исключение IllegalArgumentException
  */
-fun plusMinus(expression: String): Int = TODO()
+fun plusMinus(expression: String): Int {
+    if ("$expression + ".matches(Regex("""(\d+\s[+-]\s)+"""))) {
+        val parts = expression.split(" ")
+        var x1 = parts[0].toInt()
+        for (i in 1 until (parts.size - 1) step 2) {
+            val x2 = parts[i + 1].toInt()
+            when (parts[i]) {
+                "+" -> x1 += x2
+                "-" -> x1 -= x2
+            }
+        }
+        return x1
+    } else {
+        throw IllegalArgumentException(expression)
+    }
+}
 
 /**
  * Сложная (6 баллов)

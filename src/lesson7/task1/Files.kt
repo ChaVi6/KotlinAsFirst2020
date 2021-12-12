@@ -450,9 +450,10 @@ fun markdownToHtmlLists(inputName: String, outputName: String) {
             dot = 'O'
 
         if (tabs > tabsBefore) {
-            if (result.size > 0)
+            if (result.size > 0) {
                 result.removeLast()
-            elementsToClose.add("li")
+                elementsToClose.add("li")
+            }
             result.add("<${mapDotToTag[dot]}>")
             elementsToClose.add("${mapDotToTag[dot]}")
             writeTextToResult(text)
@@ -472,8 +473,6 @@ fun markdownToHtmlLists(inputName: String, outputName: String) {
         listBefore = dot
         tabsBefore = tabs
     }
-
-    elementsToClose.removeFirst()
 
     val reversedList = elementsToClose.reversed()
     for (e in reversedList) {

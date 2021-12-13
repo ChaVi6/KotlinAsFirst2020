@@ -4,6 +4,7 @@ package lesson7.task1
 
 
 import java.io.File
+import java.lang.StringBuilder
 
 // Урок 7: работа с файлами
 // Урок интегральный, поэтому его задачи имеют сильно увеличенную стоимость
@@ -89,12 +90,12 @@ fun deleteMarked(inputName: String, outputName: String) {
  *
  */
 fun countSubstrings(inputName: String, substrings: List<String>): Map<String, Int> {
-    val file = File(inputName).readText()
+    val reader = File(inputName).readText()
     val map = mutableMapOf<String, Int>()
     for (i in substrings.indices) {
         map[substrings[i]] = 0
-        for (k in file.indices)
-            if (file.toLowerCase().startsWith(substrings[i].toLowerCase(), k))
+        for (k in reader.indices)
+            if (reader.toLowerCase().startsWith(substrings[i].toLowerCase(), k))
                 map[substrings[i]] = map[substrings[i]]!! + 1
     }
     return map
@@ -255,7 +256,27 @@ fun transliterate(inputName: String, dictionary: Map<Char, String>, outputName: 
  * Обратите внимание: данная функция не имеет возвращаемого значения
  */
 fun chooseLongestChaoticWord(inputName: String, outputName: String) {
-    TODO()
+    val reader = File(inputName).readLines()
+    val writer = File(outputName).bufferedWriter()
+    val str = StringBuilder()
+    var x = 0
+    for (word in reader) {
+        val s = mutableListOf<Char>()
+        for (i in word) {
+            if (s.contains(i.toLowerCase())) break
+            else {
+                s.add(i.toLowerCase())
+                if ((s.size == word.length) && (word.length == x)) {
+                    str.append(", $word")
+                } else if ((s.size == word.length) && (word.length > x)) {
+                    x = word.length
+                    str.clear().append(word)
+                }
+            }
+        }
+    }
+    writer.write(str.toString())
+    writer.close()
 }
 
 /**

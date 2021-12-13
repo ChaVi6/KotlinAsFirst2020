@@ -77,21 +77,22 @@ fun main() {
  * Обратите внимание: некорректная с точки зрения календаря дата (например, 30.02.2009) считается неверными
  * входными данными.
  */
+
+val months = listOf(
+    "января",
+    "февраля",
+    "марта",
+    "апреля",
+    "мая",
+    "июня",
+    "июля",
+    "августа",
+    "сентября",
+    "октября",
+    "ноября",
+    "декабря",
+)
 fun dateStrToDigit(str: String): String {
-    val months = listOf(
-        "января",
-        "февраля",
-        "марта",
-        "апреля",
-        "мая",
-        "июня",
-        "июля",
-        "августа",
-        "сентября",
-        "октября",
-        "ноября",
-        "декабря",
-    )
     val parts = str.split(" ")
     return if (parts.size != 3) ""
     else
@@ -170,21 +171,21 @@ fun bestHighJump(jumps: String): Int = TODO()
  * Про нарушении формата входной строки бросить исключение IllegalArgumentException
  */
 fun plusMinus(expression: String): Int {
-    if ("$expression + ".matches(Regex("""(\d+\s[+-]\s)+"""))) {
-        val parts = expression.split(" ")
-        var x1 = parts[0].toInt()
-        for (i in 1 until (parts.size - 1) step 2) {
-            val x2 = parts[i + 1].toInt()
-            when (parts[i]) {
-                "+" -> x1 += x2
-                "-" -> x1 -= x2
-            }
-        }
-        return x1
-    } else {
+    if (!"$expression + ".matches(Regex("""(\d+\s[+-]\s)+"""))) {
         throw IllegalArgumentException(expression)
     }
+    val parts = expression.split(" ")
+    var x1 = parts[0].toInt()
+    for (i in 1 until (parts.size - 1) step 2) {
+        val x2 = parts[i + 1].toInt()
+        when (parts[i]) {
+            "+" -> x1 += x2
+            "-" -> x1 -= x2
+        }
+    }
+    return x1
 }
+
 
 
 /**

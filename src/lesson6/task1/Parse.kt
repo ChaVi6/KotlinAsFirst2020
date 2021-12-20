@@ -253,6 +253,7 @@ fun fromRoman(roman: String): Int {
         'V' to 5,
         'I' to 1
     )
+    if (roman == "") return -1
     if (!Regex("M*(CM)*D*(CD)*C*(XC)*L*(XL)*X*(IX)*V*(IV)*I*").matches(roman)) {
         return -1
     }

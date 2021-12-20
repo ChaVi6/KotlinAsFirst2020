@@ -245,33 +245,26 @@ fun mostExpensive(description: String): String {
  */
 fun fromRoman(roman: String): Int {
     val numbers = mapOf(
-        "CM" to 900,
-        "M" to 1000,
-        "CD" to 400,
-        "D" to 500,
-        "XC" to 90,
-        "C" to 100,
-        "XL" to 40,
-        "L" to 50,
-        "IX" to 9,
-        "X" to 10,
-        "IV" to 4,
-        "V" to 5,
-        "I" to 1
+        'M' to 1000,
+        'D' to 500,
+        'C' to 100,
+        'L' to 50,
+        'X' to 10,
+        'V' to 5,
+        'I' to 1
     )
-    var romanString = roman
-    var number = 0
-    for ((romanNumber, decadeNumber) in numbers) {
-        while (romanString.indexOf(romanNumber) > -1) {
-            romanString = romanString.replaceFirst(romanNumber, "")
-            number += decadeNumber
-        }
-    }
-    if (romanString != "" || number == 0) {
+    if (!Regex("M*(CM)*D*(CD)*C*(XC)*L*(XL)*X*(IX)*V*(IV)*I*").matches(roman)) {
         return -1
     }
+    var number = 0
+    for (i in roman.indices) {
+        if (i + 1 == roman.length || numbers.getValue(roman[i]) >= numbers.getValue(roman[i + 1])) {
+            number += numbers.getValue(roman[i])
+        } else {
+            number -= numbers.getValue(roman[i])
+        }
+    }
     return number
-
 }
 
 /**
@@ -311,3 +304,5 @@ fun fromRoman(roman: String): Int {
  *
  */
 fun computeDeviceCells(cells: Int, commands: String, limit: Int): List<Int> = TODO()
+
+

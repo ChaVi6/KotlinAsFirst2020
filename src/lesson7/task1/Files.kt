@@ -65,20 +65,17 @@ fun alignFile(inputName: String, lineLength: Int, outputName: String) {
  * Подчёркивание в середине и/или в конце строк значения не имеет.
  */
 fun deleteMarked(inputName: String, outputName: String) {
-    val writer = File(outputName).bufferedWriter()
-    for (line in File(inputName).readLines()) {
-        if (line.isNotEmpty()) {
-            if (line[0] != '_') {
-                writer.write(line)
-                writer.newLine()
+    File(outputName).bufferedWriter().use {
+        for (line in File(inputName).readLines()) {
+            if (line.isNotEmpty()) {
+                if (line[0] == '_') continue
             }
-        } else {
-            writer.write(line)
-            writer.newLine()
+            it.write(line)
+            it.newLine()
         }
     }
-    writer.close()
 }
+
 
 /**
  * Средняя (14 баллов)
@@ -90,13 +87,20 @@ fun deleteMarked(inputName: String, outputName: String) {
  *
  */
 fun countSubstrings(inputName: String, substrings: List<String>): Map<String, Int> {
-    val reader = File(inputName).readText()
     val map = mutableMapOf<String, Int>()
-    for (i in substrings.indices) {
-        map[substrings[i]] = 0
-        for (k in reader.indices)
-            if (reader.toLowerCase().startsWith(substrings[i].toLowerCase(), k))
-                map[substrings[i]] = map[substrings[i]]!! + 1
+    var index = 0
+    for (w in substrings) {
+        map[w] = 0
+        for (i in File(inputName).readLines()) {
+            index = 0
+            while (index != -1 && index < i.length) {
+                index = i.indexOf(w, index, true)
+                if (index != -1) {
+                    map[w] = map[w]!! + 1
+                    index++
+                }
+            }
+        }
     }
     return map
 }
@@ -278,6 +282,7 @@ fun chooseLongestChaoticWord(inputName: String, outputName: String) {
     writer.write(str.toString())
     writer.close()
 }
+
 
 /**
  * Сложная (22 балла)

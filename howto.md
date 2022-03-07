@@ -18,20 +18,21 @@ git checkout master
 git merge backport upstream-theirs/master  
 (переходим в ветку master и мёрджим)  
 
-(вручную исправляем все конфликты)  
+(вручную исправляем все конфликты)
+
+git remote -v > remotes  
+(создаём файл remotes и переносим туда всё, что выдаёт git remote -v) 
+
+git add remotes  
+(добавляем remotes)  
 
 git commit -m "go"  
 git push  
 
-git remote -v > remotes  
-(создаём файл remotes и переносим туда всё, что выдаёт git remote -v)  
-
 (создаём файл howto.md и записываем в него процесс работы)  
-  
-git add remotes  
+   
 git add howto.md  
-(добавляем remotes и howto.md)  
+(добавляем howto.md)  
   
-git commit -m "win"
+git commit -m "win"  
 git push
-  

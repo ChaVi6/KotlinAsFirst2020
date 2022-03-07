@@ -69,6 +69,7 @@ fun minBiRoot(a: Double, b: Double, c: Double): Double {
  * Мой возраст. Для заданного 0 < n < 200, рассматриваемого как возраст человека,
  * вернуть строку вида: «21 год», «32 года», «12 лет».
  */
+
 fun ageDescription(age: Int): String {
     return if (age in 10..20) "$age лет"
     else if (age in 110..120) "$age лет"
@@ -79,7 +80,7 @@ fun ageDescription(age: Int): String {
 }
 
 /**
- * Простая (2 балла)
+ * * Простая (2 балла)
  *
  * Путник двигался t1 часов со скоростью v1 км/час, затем t2 часов — со скоростью v2 км/час
  * и t3 часов — со скоростью v3 км/час.
@@ -89,7 +90,14 @@ fun timeForHalfWay(
     t1: Double, v1: Double,
     t2: Double, v2: Double,
     t3: Double, v3: Double
-): Double = TODO()
+): Double {
+    val halfWay = (t1 * v1 + t2 * v2 + t3 * v3) / 2
+    return when {
+        (v1 * t1 >= halfWay) -> halfWay / v1
+        (v1 * t1 + v2 * t2 >= halfWay) -> (halfWay - v1 * t1) / v2 + t1
+        else -> (halfWay - v1 * t1 - v2 * t2) / v3 + t1 + t2
+    }
+}
 
 /**
  * Простая (2 балла)
@@ -104,7 +112,21 @@ fun whichRookThreatens(
     kingX: Int, kingY: Int,
     rookX1: Int, rookY1: Int,
     rookX2: Int, rookY2: Int
-): Int = TODO()
+): Int {
+    var w1 = false
+    var w2 = false
+    if (kingX == rookX1 || kingY == rookY1)
+        w1 = true
+    if (kingX == rookX2 || kingY == rookY2)
+        w2 = true
+    return when {
+        w1 && w2 -> 3
+        !w1 && !w2 -> 0
+        w1 -> 1
+        else -> 2
+    }
+}
+
 
 /**
  * Простая (2 балла)
@@ -120,7 +142,20 @@ fun rookOrBishopThreatens(
     kingX: Int, kingY: Int,
     rookX: Int, rookY: Int,
     bishopX: Int, bishopY: Int
-): Int = TODO()
+): Int {
+    var w1 = false
+    var w2 = false
+    if (kingX == rookX || kingY == rookY)
+        w1 = true
+    if ((kingX - kingY == bishopX - bishopY) || (kingX + kingY == bishopX + bishopY))
+        w2 = true
+    return when {
+        w1 && w2 -> 3
+        !w1 && !w2 -> 0
+        w1 -> 1
+        else -> 2
+    }
+}
 
 /**
  * Простая (2 балла)
@@ -144,6 +179,7 @@ fun triangleKind(a: Double, b: Double, c: Double): Int {
 }
 
 
+
 /**
  * Средняя (3 балла)
  *
@@ -152,6 +188,7 @@ fun triangleKind(a: Double, b: Double, c: Double): Int {
  * Найти длину пересечения отрезков AB и CD.
  * Если пересечения нет, вернуть -1.
  */
+
 fun segmentLength(a: Int, b: Int, c: Int, d: Int): Int {
     var min = 0
     var max = 0
@@ -159,3 +196,4 @@ fun segmentLength(a: Int, b: Int, c: Int, d: Int): Int {
     max = if (a > c) a else c
     return max(-1, (min - max))
 }
+

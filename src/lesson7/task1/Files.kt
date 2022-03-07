@@ -2,7 +2,9 @@
 
 package lesson7.task1
 
+
 import java.io.File
+import java.lang.StringBuilder
 
 // Урок 7: работа с файлами
 // Урок интегральный, поэтому его задачи имеют сильно увеличенную стоимость
@@ -85,8 +87,24 @@ fun deleteMarked(inputName: String, outputName: String) {
  * Регистр букв игнорировать, то есть буквы е и Е считать одинаковыми.
  *
  */
-fun countSubstrings(inputName: String, substrings: List<String>): Map<String, Int> = TODO()
-
+fun countSubstrings(inputName: String, substrings: List<String>): Map<String, Int> {
+    val map = mutableMapOf<String, Int>()
+    var index = 0
+    for (w in substrings) {
+        map[w] = 0
+        for (i in File(inputName).readLines()) {
+            index = 0
+            while (index != -1 && index < i.length) {
+                index = i.indexOf(w, index, true)
+                if (index != -1) {
+                    map[w] = map[w]!! + 1
+                    index++
+                }
+            }
+        }
+    }
+    return map
+}
 
 /**
  * Средняя (12 баллов)
@@ -255,25 +273,27 @@ fun hasDifferentLetters(word: String): Boolean {
  * Обратите внимание: данная функция не имеет возвращаемого значения
  */
 fun chooseLongestChaoticWord(inputName: String, outputName: String) {
-    val file = File(inputName).readLines()
-    var max = 0
-    var words = mutableListOf<String>()
-
-    for (word in file) {
-        if (word.length > max) {
-            if (hasDifferentLetters(word)) {
-                words = mutableListOf(word)
-                max = word.length
-            }
-        } else if (word.length == max) {
-            if (hasDifferentLetters(word)) {
-                words.add(word)
+    val reader = File(inputName).readLines()
+    val writer = File(outputName).bufferedWriter()
+    val str = StringBuilder()
+    var x = 0
+    for (word in reader) {
+        val s = mutableListOf<Char>()
+        for (i in word) {
+            if (s.contains(i.toLowerCase())) break
+            else {
+                s.add(i.toLowerCase())
+                if ((s.size == word.length) && (word.length == x)) {
+                    str.append(", $word")
+                } else if ((s.size == word.length) && (word.length > x)) {
+                    x = word.length
+                    str.clear().append(word)
+                }
             }
         }
     }
-
-    File(outputName).writeText(words.joinToString(separator = ", "))
-
+    writer.write(str.toString())
+    writer.close()
 }
 
 
@@ -546,4 +566,6 @@ fun printMultiplicationProcess(lhv: Int, rhv: Int, outputName: String) {
 fun printDivisionProcess(lhv: Int, rhv: Int, outputName: String) {
     TODO()
 }
+
+
 

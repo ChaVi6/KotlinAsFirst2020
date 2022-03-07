@@ -2,6 +2,7 @@
 
 package lesson3.task1
 
+import kotlin.math.abs
 import kotlin.math.sqrt
 
 // Урок 3: циклы
@@ -76,12 +77,13 @@ fun digitNumber(n: Int): Int {
     var count = 0
     var number = n
     if (number == 0) return 1
-    while (number != 0) {
+    while (number > 0) {
         count += 1
         number /= 10
     }
     return count
 }
+
 
 /**
  * Простая (2 балла)
@@ -108,6 +110,7 @@ fun fib(n: Int): Int {
  *
  * Для заданного числа n > 1 найти минимальный делитель, превышающий 1
  */
+
 fun minDivisor(n: Int): Int {
     var x = n
     for (i in 2..Math.sqrt(n.toDouble()).toInt()) {
@@ -122,6 +125,7 @@ fun minDivisor(n: Int): Int {
  *
  * Для заданного числа n > 1 найти максимальный делитель, меньший n
  */
+
 fun maxDivisor(n: Int): Int {
     var x = 1
     for (i in 2..Math.sqrt(n.toDouble()).toInt()) {
@@ -132,6 +136,7 @@ fun maxDivisor(n: Int): Int {
     }
     return x
 }
+
 
 /**
  * Простая (2 балла)
@@ -158,8 +163,14 @@ fun collatzSteps(x: Int): Int = TODO()
  * минимальное число k, которое делится и на m и на n без остатка
  */
 fun lcm(m: Int, n: Int): Int {
-    fun gcd(a: Int, b: Int): Int = if (b == 0) a else gcd(b, a % b)
-    return (m / gcd(m, n) * n)
+    var d1 = m
+    var d2 = n
+    while (d1 != d2)
+        if (d1 > d2)
+            d1 -= d2
+        else
+            d2 -= d1
+    return n * m / d1
 }
 
 

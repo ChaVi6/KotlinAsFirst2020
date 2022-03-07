@@ -3,6 +3,7 @@
 package lesson4.task1
 
 import lesson1.task1.discriminant
+import kotlin.math.pow
 import kotlin.math.sqrt
 
 // Урок 4: списки
@@ -127,15 +128,11 @@ fun abs(v: List<Double>): Double = sqrt(v.sumOf { it * it })
  *
  * Рассчитать среднее арифметическое элементов списка list. Вернуть 0.0, если список пуст
  */
-fun mean(list: List<Double>): Double {
-    var ar: Double = 0.0
-    if (list.isEmpty()) ar = 0.0
-    else {
-        ar = list.sum() / list.size
-    }
-    return ar
-}
 
+fun mean(list: List<Double>): Double = when {
+    list.isNotEmpty() -> list.sum() / list.size
+    else -> 0.0
+}
 
 /**
  * Средняя (3 балла)
@@ -183,7 +180,12 @@ fun polynom(p: List<Int>, x: Int): Int = TODO()
  *
  * Обратите внимание, что данная функция должна изменять содержание списка list, а не его копии.
  */
-fun accumulate(list: MutableList<Int>): MutableList<Int> = TODO()
+fun accumulate(list: MutableList<Int>): MutableList<Int> {
+    for (i in 1 until list.size) {
+        list[i] += list[i - 1]
+    }
+    return list
+}
 
 /**
  * Средняя (3 балла)
@@ -241,12 +243,10 @@ fun factorizeToString(n: Int): String {
 fun convert(n: Int, base: Int): List<Int> {
     var x = n
     val result = mutableListOf<Int>()
-    if (x == 0) result.add(0)
-    else {
-        while (x > 0) {
-            result.add(x % base)
-            x /= base
-        }
+    if (x == 0) return listOf(0)
+    while (x > 0) {
+        result.add(x % base)
+        x /= base
     }
     return result.reversed()
 }
@@ -284,6 +284,7 @@ fun convertToString(n: Int, base: Int): String {
  * из системы счисления с основанием base в десятичную.
  * Например: digits = (1, 3, 12), base = 14 -> 250
  */
+
 fun pow(a: Int, b: Int): Int {
     if (b == 0)
         return 1
@@ -338,17 +339,17 @@ fun decimalFromString(str: String, base: Int): Int {
  * Например: 23 = XXIII, 44 = XLIV, 100 = C
  */
 fun roman(n: Int): String {
-    var number = n
-    val ab = mapOf(
-        "M" to 1000, "CM" to 900, "D" to 500, "CD" to 400, "C" to 100, "XC" to 90, "L" to 50,
-        "XL" to 40, "X" to 10, "IX" to 9, "V" to 5, "IV" to 4, "I" to 1
-    )
+    val num = listOf(1000, 900, 500, 400, 100, 90, 50, 40, 10, 9, 5, 4, 1)
+    val let = listOf("M", "CM", "D", "CD", "C", "XC", "L", "XL", "X", "IX", "V", "IV", "I")
     val str = StringBuilder()
-    for ((k, v) in ab) {
-        while (number - v >= 0) {
-            str.append(k)
-            number -= v
+    var x = n
+    var i = 0
+    while (x > 0) {
+        while (x >= num[i]) {
+            str.append(let[i])
+            x -= num[i]
         }
+        i += 1
     }
     return str.toString()
 }

@@ -103,6 +103,7 @@ fun buildGrades(grades: Map<String, Int>): Map<Int, List<String>> {
     return result
 }
 
+
 /**
  * Простая (2 балла)
  *
@@ -124,6 +125,7 @@ fun containsIn(a: Map<String, String>, b: Map<String, String>): Boolean {
         }
         if (!t)
             return false
+        if (value != b[key]) return false
     }
     return true
 }
@@ -189,6 +191,7 @@ fun whoAreInBoth(a: List<String>, b: List<String>): List<String> {
  *     mapOf("Emergency" to "911", "Police" to "02")
  *   ) -> mapOf("Emergency" to "112, 911", "Police" to "02")
  */
+
 fun mergePhoneBooks(mapA: Map<String, String>, mapB: Map<String, String>): Map<String, String> {
     val mapOfSets = mutableMapOf<String, MutableSet<String>>()
     for ((k, v) in mapA) {
@@ -218,6 +221,7 @@ fun mergePhoneBooks(mapA: Map<String, String>, mapB: Map<String, String>): Map<S
  *   averageStockPrice(listOf("MSFT" to 100.0, "MSFT" to 200.0, "NFLX" to 40.0))
  *     -> mapOf("MSFT" to 150.0, "NFLX" to 40.0)
  */
+
 fun averageStockPrice(stockPrices: List<Pair<String, Double>>): Map<String, Double> {
     val map = mutableMapOf<String, MutableList<Double>>()
     val result = mutableMapOf<String, Double>()
@@ -234,6 +238,7 @@ fun averageStockPrice(stockPrices: List<Pair<String, Double>>): Map<String, Doub
     }
     return result
 }
+
 
 /**
  * Средняя (4 балла)
@@ -365,9 +370,7 @@ fun findSumOfTwo(list: List<Int>, number: Int): Pair<Int, Int> {
     return result
 }
 
-/**
- * Очень сложная (8 баллов)
- *
+ /**
  * Входными данными является ассоциативный массив
  * "название сокровища"-"пара (вес сокровища, цена сокровища)"
  * и вместимость вашего рюкзака.

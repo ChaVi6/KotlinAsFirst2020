@@ -4,6 +4,8 @@ package lesson6.task1
 
 import lesson2.task2.daysInMonth
 import java.lang.IllegalArgumentException
+import java.util.*
+
 
 // Урок 6: разбор строк, исключения
 // Максимальное количество баллов = 13
@@ -91,6 +93,7 @@ val months = listOf(
  * Обратите внимание: некорректная с точки зрения календаря дата (например, 30.02.2009) считается неверными
  * входными данными.
  */
+
 fun dateStrToDigit(str: String): String {
     val parts = str.split(" ")
     if (parts.size != 3) return ""
@@ -108,6 +111,7 @@ fun dateStrToDigit(str: String): String {
             return ""
         }
 }
+
 
 /**
  * Средняя (4 балла)
@@ -189,7 +193,23 @@ fun bestHighJump(jumps: String): Int = TODO()
  * Вернуть значение выражения (6 для примера).
  * Про нарушении формата входной строки бросить исключение IllegalArgumentException
  */
-fun plusMinus(expression: String): Int = TODO()
+fun plusMinus(expression: String): Int {
+    if (!"$expression + ".matches(Regex("""(\d+\s[+-]\s)+"""))) {
+        throw IllegalArgumentException(expression)
+    }
+    val parts = expression.split(" ")
+    var x1 = parts[0].toInt()
+    for (i in 1 until (parts.size - 1) step 2) {
+        val x2 = parts[i + 1].toInt()
+        when (parts[i]) {
+            "+" -> x1 += x2
+            "-" -> x1 -= x2
+        }
+    }
+    return x1
+}
+
+
 
 /**
  * Сложная (6 баллов)
@@ -200,7 +220,17 @@ fun plusMinus(expression: String): Int = TODO()
  * Вернуть индекс начала первого повторяющегося слова, или -1, если повторов нет.
  * Пример: "Он пошёл в в школу" => результат 9 (индекс первого 'в')
  */
-fun firstDuplicateIndex(str: String): Int = TODO()
+fun firstDuplicateIndex(str: String): Int {
+    val parts = str.split(" ")
+    if (parts.size == 1) return -1
+    var x = 0
+    for (i in 0 until parts.size - 1) {
+        if (parts[i].equals(parts[i + 1], ignoreCase = true))
+            return x
+        x += parts[i].length + 1
+    }
+    return -1
+}
 
 /**
  * Сложная (6 баллов)
@@ -304,6 +334,6 @@ fun fromRoman(roman: String): Int {
  * IllegalArgumentException должен бросаться даже если ошибочная команда не была достигнута в ходе выполнения.
  *
  */
-fun computeDeviceCells(cells: Int, commands: String, limit: Int): List<Int> = TODO()
 
+fun computeDeviceCells(cells: Int, commands: String, limit: Int): List<Int> = TODO()
 
